@@ -1,0 +1,24 @@
+{
+  "name": "discord-in-terminal",
+  "version": "0.1.0",
+  "description": "Discord dans le terminal",
+  "main": "build/app.js",
+  "scripts": {
+    "test": "node build/app.js",
+    "build": "tsc",
+    "run": "node build/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MattEstHaut/discord-in-terminal.git"
+  },
+  "keywords": [
+    "discord"
+  ],
+  "author": "Delucchi Matteo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MattEstHaut/discord-in-terminal/issues"
+  },
+  "homepage": "https://github.com/MattEstHaut/discord-in-terminal#readme"
+}

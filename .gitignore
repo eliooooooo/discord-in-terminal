@@ -1,10 +1,5 @@
-# Logs
-logs
-*.log
-
-# Builds
-build/Release
-build/Debug
+# Build
+build/
 
 # Dependency directories
 node_modules/
