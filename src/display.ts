@@ -94,7 +94,7 @@ export class Display {
       }
     }
 
-    let text = "";
+    const lines: string[] = [];
     for (let i = 0; i < screen.length; i++) {
       let dLeft = (cols - Style.len(screen[i][1])) / 2;
       dLeft = Math.floor(dLeft);
@@ -119,12 +119,10 @@ export class Display {
       // let line = screen[i][0] + " ".repeat(left) + screen[i][1] + " ".repeat(right) + screen[i][2];
       // if (l > cols) line = Style.substring(line, 0, cols);
 
-      line += "\n";
-      text += line;
+      lines.push(line);
     }
-    text = text.substring(0, text.length - 1);
 
     this.clear();
-    process.stdout.write(Style.stylish(text));
+    process.stdout.write(Style.stylish(lines.join("\n")));
   }
 }

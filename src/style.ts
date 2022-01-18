@@ -1,3 +1,5 @@
+import wcwidth from "wcwidth";
+
 export namespace Style {
   // Styles //////////////////////////////////
 
@@ -143,7 +145,7 @@ export namespace Style {
     const t = str.split("$");
     let len = 0;
 
-    for (let i = 0; i < t.length; i += 2) len += t[i].length;
+    for (let i = 0; i < t.length; i += 2) len += wcwidth(t[i]);
     for (let i = 1; i < t.length; i += 2) if (t[i] == "") len += 1;
 
     return len;

@@ -14,6 +14,7 @@ export class Input {
   private _handler: (event: string) => void = (event: string) => {};
   private _textHandler: (text: string) => void = (text: string) => {};
   public writeTab: boolean = false;
+  public writeReturn: boolean = false;
 
   constructor() {
     process.stdin.on("data", (key) => {
@@ -25,7 +26,7 @@ export class Input {
       else {
         if (keyCode == 13) {
           this._handler("enter");
-          this._text += "\n";
+          if (this.writeReturn) this._text += "\n";
         } else if (keyCode == 127) {
           if (this._text.length > 0) this._text = this._text.slice(0, -1);
           else this._handler("backspace");

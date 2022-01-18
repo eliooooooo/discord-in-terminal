@@ -104,9 +104,9 @@ export namespace Menu {
       const width = Display.cols() < 50 ? Display.cols() : 50;
 
       let head: string;
-      if (author.length + 1 >= width) head = author.substring(0, width - 4) + "...-";
-      else if (author.length + date.length + 2 > width) head = author + "-".repeat(width - author.length);
-      else head = author + "-".repeat(width - author.length - date.length) + date;
+      if (Style.len(author) + 1 >= width) head = author.substring(0, width - 4) + "...-";
+      else if (Style.len(author) + date.length + 2 > width) head = author + "-".repeat(width - Style.len(author));
+      else head = author + "-".repeat(width - Style.len(author) - date.length) + date;
 
       head = "$w+B$" + head + "$C+CB$";
       const lines = wrapText(content, width - 3).map((line) => "$C+D+w$" + line + "$C+CD$");

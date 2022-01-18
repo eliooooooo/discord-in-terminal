@@ -50,6 +50,8 @@ export namespace Interface {
     display.append(Menu.header(status.username, status.version_name, status.version));
     display.print();
 
+    status.selection = -1;
+
     input.on((event) => {
       if (event == "exit") exit();
       else if (event == "escape") {
@@ -62,16 +64,36 @@ export namespace Interface {
           selectChannel();
         }
       } else if (event == "enter") {
-        const guild = research(input.text, discord.guilds)[0];
-        if (guild != null) {
-          status.server = guild.name;
+        if (status.selection >= 0) {
+          const guilds = research(input.text, discord.guilds);
+          status.server = guilds[status.selection].name;
           discord.selectGuild(status.server);
           selectChannel();
+        } else {
+          const guild = research(input.text, discord.guilds)[0];
+          if (guild != null) {
+            status.server = guild.name;
+            discord.selectGuild(status.server);
+            selectChannel();
+          }
         }
+      } else if (event == "up") {
+        if (status.selection >= 0) status.selection--;
+        const guilds = research(input.text, discord.guilds).map((guild) => guild.name);
+        display.append(Menu.searching(input.text, guilds, status.selection));
+        display.append(Menu.header(status.username, status.version_name, status.version));
+        display.print();
+      } else if (event == "down") {
+        const guilds = research(input.text, discord.guilds).map((guild) => guild.name);
+        if (status.selection < guilds.length - 1) status.selection++;
+        display.append(Menu.searching(input.text, guilds, status.selection));
+        display.append(Menu.header(status.username, status.version_name, status.version));
+        display.print();
       }
     });
 
     input.textInput((text) => {
+      status.selection = -1;
       const guilds = research(text, discord.guilds).map((guild) => guild.name);
 
       display.append(Menu.searching(text, guilds));
@@ -88,6 +110,8 @@ export namespace Interface {
     display.append(Menu.header(status.username, status.version_name, status.version));
     display.print();
 
+    status.selection = -1;
+
     input.on((event) => {
       if (event == "exit") exit();
       else if (event == "escape") {
@@ -100,20 +124,41 @@ export namespace Interface {
           waitMessages();
         }
       } else if (event == "enter") {
-        const channel = research(input.text, discord.textChannels)[0];
-        if (channel != null) {
-          status.channel = channel.name;
+        if (status.selection >= 0) {
+          const channels = research(input.text, discord.textChannels);
+          status.channel = channels[status.selection].name;
           discord.selectTextChannel(status.channel);
           status.waitForMessage = discord.selectTextChannel(status.channel);
           waitMessages();
+        } else {
+          const channel = research(input.text, discord.textChannels)[0];
+          if (channel != null) {
+            status.channel = channel.name;
+            discord.selectTextChannel(status.channel);
+            status.waitForMessage = discord.selectTextChannel(status.channel);
+            waitMessages();
+          }
         }
       } else if (event == "backspace") {
         status.savedServer = status.server;
         selectServer();
+      } else if (event == "up") {
+        if (status.selection >= 0) status.selection--;
+        const channels = research(input.text, discord.textChannels).map((channel) => channel.name);
+        display.append(Menu.searching(input.text, channels, status.selection, status.server));
+        display.append(Menu.header(status.username, status.version_name, status.version));
+        display.print();
+      } else if (event == "down") {
+        const channels = research(input.text, discord.textChannels).map((channel) => channel.name);
+        if (status.selection < channels.length - 1) status.selection++;
+        display.append(Menu.searching(input.text, channels, status.selection, status.server));
+        display.append(Menu.header(status.username, status.version_name, status.version));
+        display.print();
       }
     });
 
     input.textInput((text) => {
+      status.selection = -1;
       const channels = research(text, discord.textChannels).map((channel) => channel.name);
 
       display.append(Menu.searching(text, channels, -1, status.server));
