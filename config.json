@@ -1,0 +1,9 @@
+{
+  "token": "your discord token",
+  "shortcuts": {
+    "c": "exit",
+    "p": "selectChannel",
+    "z": "up",
+    "s": "down"
+  }
+}
